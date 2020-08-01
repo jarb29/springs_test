@@ -342,6 +342,8 @@ export default function ValidationForms() {
           </CardBody>
         </Card>
       </GridItem>
+
+
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="rose" text>
@@ -585,6 +587,10 @@ export default function ValidationForms() {
           </CardFooter>
         </Card>
       </GridItem>
+
+
+
+      
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="rose" text>

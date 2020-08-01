@@ -70,6 +70,7 @@ export default function HeaderLinks(props) {
   const managerClasses = classNames({
     [classes.managerClasses]: true
   });
+  
   return (
     <div className={wrapper}>
       <CustomInput

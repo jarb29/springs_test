@@ -51,7 +51,7 @@ const br_flag = require("assets/img/flags/BR.png");
 
 const useStyles = makeStyles(styles);
 
-export default function Dashboard() {
+export default function DashboardI() {
   const { store, actions } = useContext(Context);
   const classes = useStyles();
 
@@ -71,51 +71,6 @@ export default function Dashboard() {
 
   return (
     <div>
-      <GridContainer>
-        {new_valores.map((val, index) => {
-          const a = Math.floor(Math.random() * 5);
-          const fecha = val.fecha.split("T")[0];
-
-          const b =
-            val.codigo === "dolar" || val.codigo === "dolar_intercambio"
-              ? 0
-              : val.codigo === "euro"
-              ? 2
-              : 1;
-          console.log(b);
-          return (
-            <GridItem xs={12} sm={6} md={6} lg={3} key={index}>
-              <Card>
-                <CardHeader color={colors[a]} stats icon>
-                  <CardIcon color={colors[a]}>
-                    <Icon>{header_icon[b]}</Icon>
-                  </CardIcon>
-                  <p className={classes.cardCategory}>{val.codigo}</p>
-                  <h3 className={classes.cardTitle}>
-                    <small>
-                      <b>{val.valor}</b>
-                    </small>
-                  </h3>
-                </CardHeader>
-                <CardFooter stats>
-                  <div className={classes.stats}>
-                    <GridItem>
-                      <small>
-                        Nombre: <b>{val.nombre} </b>
-                      </small>
-                      <Danger>
-                        <DateRange />
-                        <a>{fecha}</a>
-                      </Danger>
-                    </GridItem>
-                  </div>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          );
-        })}
-      </GridContainer>
-
       <GridContainer>
         <GridItem xs={12}>
           <Card>
