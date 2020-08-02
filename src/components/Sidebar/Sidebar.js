@@ -371,7 +371,7 @@ class Sidebar extends React.Component {
                 onClick={() => this.openCollapse("openAvatar")}
               >
                 <ListItemText
-                  primary={"Seleccione rango de fechas"}
+                  primary={"Seleccione fechas"}
                   secondary={
                     <b
                       className={
@@ -395,6 +395,11 @@ class Sidebar extends React.Component {
                       classes.itemLink + " " + classes.userCollapseLinks
                     }
                   >
+                     <ListItemText
+                  primary={"Debe seleccionar un rango de fechas para poder mostrar las graficas"}
+                  disableTypography={true}
+                  className={classes.userItemText}
+                />
                   <Calender />
                </NavLink>
               </ListItem>

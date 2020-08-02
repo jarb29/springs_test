@@ -5,7 +5,6 @@ import DashboardI from "views/DashboardI/DashboardI.js";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import GridOn from "@material-ui/icons/GridOn";
 
-
 var dashRoutes = [
   {
     path: "/dashboard",
@@ -20,6 +19,6 @@ var dashRoutes = [
     icon: GridOn,
     component: DashboardI,
     layout: "/admin"
-  },
+  }
 ];
 export default dashRoutes;

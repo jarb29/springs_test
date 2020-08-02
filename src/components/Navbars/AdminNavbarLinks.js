@@ -15,17 +15,14 @@ import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
 import Hidden from "@material-ui/core/Hidden";
 import Popper from "@material-ui/core/Popper";
-import Divider from "@material-ui/core/Divider";
 import Input from "@material-ui/core/Input";
 
 // @material-ui/icons
-import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
 
 // core components
-import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
@@ -35,6 +32,7 @@ const useStyles = makeStyles(styles);
 export default function HeaderLinks(props) {
   const { store, actions } = useContext(Context);
   const [openNotification, setOpenNotification] = React.useState(null);
+  const [contador, setContador] = React.useState(0);
   const handleClickNotification = event => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
@@ -79,6 +77,7 @@ export default function HeaderLinks(props) {
   const managerClasses = classNames({
     [classes.managerClasses]: true
   });
+  let contador_interno = 0;
 
   return (
     <div className={wrapper}>
@@ -165,13 +164,13 @@ export default function HeaderLinks(props) {
                 : classes.links)
             }
           />
-          <span className={classes.notifications}>5</span>
+          <span className={classes.notifications}>{contador}</span>
           <Hidden mdUp implementation="css">
             <span
               onClick={handleClickNotification}
               className={classes.linkText}
             >
-              {rtlActive ? "إعلام" : "Notification"}
+              {"Notification"}
             </span>
           </Hidden>
         </Button>
@@ -197,30 +196,37 @@ export default function HeaderLinks(props) {
               <Paper className={classes.dropdown}>
                 <ClickAwayListener onClickAway={handleCloseNotification}>
                   <MenuList role="menu">
-                  <MenuItem
-                          onClick={handleCloseNotification}
-                          className={dropdownItem}
-                        >
-                        Esta opcion presente el valor del dia anterior
-                        </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseNotification}
+                      className={dropdownItem}
+                    >
+                      Esta opcion presente el valor del dia anterior
+                    </MenuItem>
                     {store.indicadores_dia_anterior.map((indi, index) => {
                       const nombre = indi.serie.length > 0 ? indi.nombre : null;
-                      const valor = indi.serie.length > 0
-                        ? indi.serie.map(e => {return e.valor})
-                        : null;
-                      return (
-                        nombre? 
+                      const valor_nuevo =
+                        indi.serie.length > 0
+                          ? (contador_interno += 1)
+                          : contador_interno;
+                      setContador(valor_nuevo);
+                      const valor =
+                        indi.serie.length > 0
+                          ? indi.serie.map(e => {
+                              return e.valor;
+                            })
+                          : null;
+
+                      return nombre ? (
                         <MenuItem
                           onClick={handleCloseNotification}
                           className={dropdownItem}
                           key={index}
                         >
                           Nombre: {nombre}
-                          <br/>
+                          <br />
                           Valor: {valor[0]}
                         </MenuItem>
-                      : null);
-
+                      ) : null;
                     })}
                   </MenuList>
                 </ClickAwayListener>

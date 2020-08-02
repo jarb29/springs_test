@@ -47,8 +47,6 @@ export default function Dashboard() {
     <EuroSymbolIcon />
   ];
 
-  console.log(store.indicadoresrangoDeDias, "los dias arreglados")
-
   return (
     <div>
       <GridContainer>
@@ -95,7 +93,7 @@ export default function Dashboard() {
           );
         })}
       </GridContainer>
-      <GridContainer> 
+      <GridContainer>
         <DashboardII />
       </GridContainer>
     </div>

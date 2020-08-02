@@ -139,8 +139,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               data["labels"] = rango_dias;
               data["series"] = [valores];
               data["nombre"] = dato.nombre;
-              data["fecha_inicial"]= rango_dias[0];
-              data["fecha_final"]= rango_dias[rango_dias.length - 1];
+              data["fecha_inicial"] = rango_dias[0];
+              data["fecha_final"] = rango_dias[rango_dias.length - 1];
               indicadoresrangoDeDiasI.push(data);
             } else if (dato.msg) {
               setStore({
@@ -153,10 +153,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           }
         }
-        setStore({ 
+        setStore({
           indicadoresrangoDeDias: indicadoresrangoDeDiasI,
           indicadoresrangoDeDiasII: indicadoresrangoDeDiasI
-         });
+        });
       },
 
       // Funcion para filtrar
@@ -173,7 +173,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         console.log(new_valores, "para ver que sale");
         if (e.target.value.length === 0) {
-          setStore({ indicadores: new_valores_I,
+          setStore({
+            indicadores: new_valores_I,
             indicadoresrangoDeDias: store.indicadoresrangoDeDiasII
           });
         } else {
@@ -183,10 +184,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 indi.nombre.toLowerCase().slice(0, e.target.value.length) ===
                 e.target.value.toLowerCase()
             ),
-            indicadoresrangoDeDias: store.indicadoresrangoDeDiasII.filter(indi=>
-              indi.nombre.toLowerCase().slice(0, e.target.value.length) ===
-              e.target.value.toLowerCase()
-              )
+            indicadoresrangoDeDias: store.indicadoresrangoDeDiasII.filter(
+              indi =>
+                indi.nombre.toLowerCase().slice(0, e.target.value.length) ===
+                e.target.value.toLowerCase()
+            )
           });
         }
       }
