@@ -23,7 +23,14 @@ import styles from "assets/jss/material-dashboard-pro-react/views/dashboardStyle
 const useStyles = makeStyles(styles);
 
 export default function DashboardI() {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
+
+
+  useEffect(() => {
+    actions.indicadoreApi();
+    actions.indicadoresAntier();
+  }, [valores]);
+
   const classes = useStyles();
   const diferen_indi = [];
   let valore_tabla = [];
