@@ -2,6 +2,7 @@ import Buttons from "views/Components/Buttons.js";
 import Charts from "views/Charts/Charts.js";
 import Dashboard from "views/Dashboard/Dashboard.js";
 import DashboardI from "views/DashboardI/DashboardI.js";
+import DashboardII from "views/DashboardII/DashboardII.js";
 import ExtendedForms from "views/Forms/ExtendedForms.js";
 import ExtendedTables from "views/Tables/ExtendedTables.js";
 import GridSystem from "views/Components/GridSystem.js";
@@ -31,10 +32,17 @@ var dashRoutes = [
     layout: "/admin"
   },
   {
-    path: "/indices",
-    name: "Graficas",
+    path: "/variacion",
+    name: "Variacion",
     icon: Timeline,
     component: DashboardI,
+    layout: "/admin"
+  },
+  {
+    path: "/graficas",
+    name: "Graficas",
+    icon: Timeline,
+    component: DashboardII,
     layout: "/admin"
   },
   {

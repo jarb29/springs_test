@@ -8,9 +8,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       // Variables del retorno Indicador
       indicadores: [],
       indicadoresI: [],
+      indicadores_dia_anterior: [],
 
       // Errores del retorno
-      errorIndicador: []
+      errorIndicador: [],
+      errorindi_nombres_filt: [],
     },
 
     actions: {
@@ -37,42 +39,44 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // funcion que obtiene los mensajes
-      mensajes: () => {
+      // funcion que obtiene los indces del dia anterior
+      indicadoresAntier: () => {
         const store = getStore();
-        const { token } = store;
-        let data = {
-          token: token,
-          data: {
-            id: "personNickname",
-            name: "name",
-            date_time: "dateTime|UNIX",
-            message: "It is a long established fact that a reader will",
-            _repeat: 10
-          }
-        };
-        getActions().retornomensajes(data);
+        const { indicadores } = store;
+        const indi_nombres = Object.keys(indicadores);
+        let indi_nombres_filt = indi_nombres.slice(3, 15);
+
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        let formatted_date =
+          date.getDate() +
+          "-" +
+          (date.getMonth() + 1) +
+          "-" +
+          date.getFullYear();
+        if (store.indicadores_dia_anterior.length === 0) {
+          getActions().indicadoresAntierRetorno(
+          formatted_date,
+          indi_nombres_filt
+        );}
       },
 
-      retornomensajes: async data => {
+      indicadoresAntierRetorno: async (formatted_date, indi_nombres_filt) => {
         const store = getStore();
         const { baseURL } = store;
-        const resp = await fetch(baseURL, {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json"
+
+        for (let i = 0; i < indi_nombres_filt.length; i++) {
+          const resp = await fetch(
+            baseURL + `/${indi_nombres_filt[i]}/${formatted_date}`
+          );
+          const dato = await resp.json();
+          if (dato.msg) {
+            setStore({
+              errorindi_nombres_filt: dato
+            });
+          } else {
+            store.indicadores_dia_anterior.push(dato);
           }
-        });
-        const dato = await resp.json();
-        if (dato.msg) {
-          setStore({
-            errorMensaje: dato
-          });
-        } else {
-          setStore({
-            mensajes: dato
-          });
         }
       },
 
