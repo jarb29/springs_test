@@ -106,7 +106,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const rangoDias = (startDate, endDate) => {
           let dates = [];
           const theDate = new Date(startDate);
-          while (theDate < endDate) {
+          while (theDate <= endDate) {
             dates = [...dates, fecha(new Date(theDate))];
             theDate.setDate(theDate.getDate() + 1);
           }

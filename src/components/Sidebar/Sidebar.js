@@ -15,6 +15,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Hidden from "@material-ui/core/Hidden";
 import Collapse from "@material-ui/core/Collapse";
 import Icon from "@material-ui/core/Icon";
+import Timeline from "@material-ui/icons/Timeline";
+import Datetime from "react-datetime";
+
+// @material-ui/core components
+import FormControl from "@material-ui/core/FormControl";
 
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
@@ -22,6 +27,7 @@ import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.js";
 
 import avatar from "assets/img/faces/avatar.jpg";
+import Calender from "components/Calender/Calender";
 
 var ps;
 
@@ -48,9 +54,10 @@ class SidebarWrapper extends React.Component {
     const { className, user, headerLinks, links } = this.props;
     return (
       <div className={className} ref={this.sidebarWrapper}>
-        {user}
+       
         {headerLinks}
         {links}
+        {user}
       </div>
     );
   }
@@ -350,6 +357,80 @@ class Sidebar extends React.Component {
         [classes.photoRTL]: rtlActive
       });
 
+
+      var user = (
+        <div className={userWrapperClass}>
+          <div className={photo}>
+            <Timeline/>
+          </div>
+          <List className={classes.list}>
+            <ListItem className={classes.item + " " + classes.userItem}>
+              <NavLink
+                to={"#"}
+                className={classes.itemLink + " " + classes.userCollapseButton}
+                onClick={() => this.openCollapse("openAvatar")}
+              >
+                <ListItemText
+                  primary={"Seleccione fechas"}
+                  secondary={
+                    <b
+                      className={
+                        caret +
+                        " " +
+                        classes.userCaret +
+                        " " +
+                        (this.state.openAvatar ? classes.caretActive : "")
+                      }
+                    />
+                  }
+                  disableTypography={true}
+                  className={itemText + " " + classes.userItemText}
+                />
+              </NavLink>
+              <Collapse in={this.state.openAvatar} unmountOnExit>
+              <ListItem className={classes.collapseItem}>
+                  <NavLink
+                    to="#"
+                    className={
+                      classes.itemLink + " " + classes.userCollapseLinks
+                    }
+                  >
+                  <Calender />
+               </NavLink>
+              </ListItem>
+              </Collapse>
+            </ListItem>
+          </List>
+        </div>
+      );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     var links = (
       <List className={classes.list}>{this.createLinks(routes)}</List>
     );
@@ -431,6 +512,7 @@ class Sidebar extends React.Component {
               className={sidebarWrapper}
               headerLinks={<AdminNavbarLinks rtlActive={rtlActive} />}
               links={links}
+              user={user}
             />
             {image !== undefined ? (
               <div
@@ -455,6 +537,7 @@ class Sidebar extends React.Component {
             <SidebarWrapper
               className={sidebarWrapper}
               links={links}
+              user={user}
             />
             {image !== undefined ? (
               <div

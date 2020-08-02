@@ -25,6 +25,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardFooter from "components/Card/CardFooter.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.js";
+import DashboardII from "views/DashboardII/DashboardII";
 
 const useStyles = makeStyles(styles);
 
@@ -93,6 +94,9 @@ export default function Dashboard() {
             </GridItem>
           );
         })}
+      </GridContainer>
+      <GridContainer> 
+        <DashboardII />
       </GridContainer>
     </div>
   );
