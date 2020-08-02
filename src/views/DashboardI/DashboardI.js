@@ -27,9 +27,8 @@ export default function DashboardI() {
 
 
   useEffect(() => {
-    actions.indicadoreApi();
     actions.indicadoresAntier();
-  }, [valores]);
+  }, []);
 
   const classes = useStyles();
   const diferen_indi = [];
@@ -39,9 +38,12 @@ export default function DashboardI() {
   const valores = Object.values(store.indicadores);
   let new_valores = valores.filter(e => typeof e !== "string");
 
+  console.log(store.indicadores_dia_anterior, "indicadores del di antrior")
+
   // Funcion para calcular la diferencia...
   store.indicadores_dia_anterior.map(ind => {
     let valor_hoy = new_valores.filter(e => e.nombre === ind.nombre);
+  
     let valor_antier = ind.serie;
     valor_hoy.map(val => {
       valor_antier.map(val_a => {
@@ -71,7 +73,7 @@ export default function DashboardI() {
                 <Language />
               </CardIcon>
               <h4 className={classes.cardIconTitle}>
-                Comparacion con el dia anterior
+                Comparacion con resspecto al dia anterior
               </h4>
             </CardHeader>
             <CardBody>

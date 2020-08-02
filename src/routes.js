@@ -34,7 +34,7 @@ var dashRoutes = [
   {
     path: "/variacion",
     name: "Variacion",
-    icon: Timeline,
+    icon: GridOn,
     component: DashboardI,
     layout: "/admin"
   },

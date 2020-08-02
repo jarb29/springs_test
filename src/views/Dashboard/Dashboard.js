@@ -34,7 +34,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     actions.indicadoreApi();
-    actions.indicadoresAntier();
   }, []);
 
   const valores = Object.values(store.indicadores);

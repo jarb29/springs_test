@@ -67,12 +67,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       indicadoresAntierRetorno: async (formatted_date, indi_nombres_filt) => {
         const store = getStore();
         const { baseURL } = store;
+        console.log(indi_nombres_filt, "los nombres filtrados")
 
         for (let i = 0; i < indi_nombres_filt.length; i++) {
           const resp = await fetch(
             baseURL + `/${indi_nombres_filt[i]}/${formatted_date}`
           );
           const dato = await resp.json();
+          console.log(dato, "del dia anterior")
           if (dato.msg) {
             setStore({
               errorindi_nombres_filt: dato
@@ -128,6 +130,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               baseURL + `/${indi_nombres_filt[i]}/${rango_dias[b]}`
             );
             const dato = await resp.json();
+            console.log(dato, "el dato")
             if (b === rango_dias.length-1) {
               let data = {};
               data["labels"] = rango_dias;
