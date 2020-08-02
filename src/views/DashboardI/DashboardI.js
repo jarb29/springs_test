@@ -73,7 +73,7 @@ export default function DashboardI() {
                 <Language />
               </CardIcon>
               <h4 className={classes.cardIconTitle}>
-                Comparacion con resspecto al dia anterior
+                Comparacion con respecto al dia anterior
               </h4>
             </CardHeader>
             <CardBody>

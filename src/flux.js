@@ -67,7 +67,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         const store = getStore();
         const { baseURL } = store;
         let indicadores_dia_anterior_I = [];
-        setStore({ indicadores_dia_anterior: [] });
 
         for (let i = 0; i < indi_nombres_filt.length; i++) {
           const resp = await fetch(
@@ -122,7 +121,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       indicadoresRangoRetorno: async (rango_dias, indi_nombres_filt) => {
         let indicadoresrangoDeDiasI = [];
-        setStore({ indicadoresrangoDeDias: [], indicadoresrangoDeDiasI: [] });
 
         for (let i = 0; i < indi_nombres_filt.length; i++) {
           let valores = [];
