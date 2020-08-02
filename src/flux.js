@@ -139,6 +139,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               data["labels"] = rango_dias;
               data["series"] = [valores];
               data["nombre"] = dato.nombre;
+              data["fecha_inicial"]= rango_dias[0];
+              data["fecha_final"]= rango_dias[rango_dias.length - 1];
               indicadoresrangoDeDiasI.push(data);
             } else if (dato.msg) {
               setStore({

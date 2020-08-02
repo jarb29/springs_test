@@ -6,7 +6,7 @@ import ChartistGraph from "react-chartist";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // @material-ui/icons
 // import InfoOutline from "@material-ui/icons/InfoOutline";
@@ -38,61 +38,70 @@ export default function DashboardII() {
   return (
     <div>
       <GridContainer>
-        {store.indicadoresrangoDeDias
-          ? store.indicadoresrangoDeDias.map((indicadores, index) => {
-              const a = Math.floor(Math.random() * 5);
-              return (
-                <GridItem xs={12} sm={12} md={12} key={index}>
-                  <Card chart className={classes.cardHover}>
-                    <CardHeader
-                      color={colors[a]}
-                      className={classes.cardHeaderHover}
-                    >
-                      <ChartistGraph
-                        className="ct-chart-white-colors"
-                        data={indicadores}
-                        type="Bar"
-                        options={simpleBarChart.options}
-                        responsiveOptions={simpleBarChart.responsiveOptions}
-                        listener={simpleBarChart.animation}
-                      />
-                    </CardHeader>
-                    <CardBody>
-                      <div className={classes.cardHoverUnder}>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="Refresh"
-                          placement="bottom"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <Button simple color="info" justIcon>
-                            <Refresh className={classes.underChartIcons} />
-                          </Button>
-                        </Tooltip>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="Change Date"
-                          placement="bottom"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <Button color="transparent" simple justIcon>
-                            <Edit className={classes.underChartIcons} />
-                          </Button>
-                        </Tooltip>
-                      </div>
-                    </CardBody>
-                    <CardFooter chart>
-                      <h4 className={classes.cardTitle}>
-                        {indicadores.nombre}
-                      </h4>
-                    </CardFooter>
-                  </Card>
-                </GridItem>
-              );
-            })
-          : 
+        {store.indicadoresrangoDeDias ? (
+          store.indicadoresrangoDeDias.map((indicadores, index) => {
+            const a = Math.floor(Math.random() * 5);
+            const b = store.indicadoresrangoDeDias.length <= 2 ? 12 : 6;
+            console.log(
+              store.indicadoresrangoDeDias.length,
+              "longitud interna"
+            );
+            return (
+              <GridItem xs={12} sm={12} md={b} key={index}>
+                <Card chart className={classes.cardHover}>
+                  <CardHeader
+                    color={colors[a]}
+                    className={classes.cardHeaderHover}
+                  >
+                    <ChartistGraph
+                      className="ct-chart-white-colors"
+                      data={indicadores}
+                      type="Bar"
+                      options={simpleBarChart.options}
+                      responsiveOptions={simpleBarChart.responsiveOptions}
+                      listener={simpleBarChart.animation}
+                    />
+                  </CardHeader>
+                  <CardBody>
+                    <div className={classes.cardHoverUnder}>
+                      <Tooltip
+                        id="tooltip-top"
+                        title="Refresh"
+                        placement="bottom"
+                        classes={{ tooltip: classes.tooltip }}
+                      >
+                        <Button simple color="info" justIcon>
+                          <Refresh className={classes.underChartIcons} />
+                        </Button>
+                      </Tooltip>
+                      <Tooltip
+                        id="tooltip-top"
+                        title="Change Date"
+                        placement="bottom"
+                        classes={{ tooltip: classes.tooltip }}
+                      >
+                        <Button color="transparent" simple justIcon>
+                          <Edit className={classes.underChartIcons} />
+                        </Button>
+                      </Tooltip>
+                    </div>
+                    <p className={classes.cardCategory}>
+                    <span className={classes.successText}>
+                        Desde: {indicadores.fecha_inicial}
+                    </span>{" "}
+                      hasta {indicadores.fecha_final}
+                    </p>
+                  </CardBody>
+                  <CardFooter chart>
+                    <h4 className={classes.cardTitle}>{indicadores.nombre}</h4>
+                  </CardFooter>
+                </Card>
+              </GridItem>
+            );
+          })
+        ) : (
           <CircularProgress />
-          }
+        )}
       </GridContainer>
     </div>
   );
