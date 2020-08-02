@@ -56,33 +56,32 @@ const getState = ({ getStore, getActions, setStore }) => {
           (date.getMonth() + 1) +
           "-" +
           date.getFullYear();
-        if (store.indicadores_dia_anterior.length === 0) {
-          getActions().indicadoresAntierRetorno(
-            formatted_date,
-            indi_nombres_filt
-          );
-        }
+        getActions().indicadoresAntierRetorno(
+          formatted_date,
+          indi_nombres_filt
+        );
       },
 
       indicadoresAntierRetorno: async (formatted_date, indi_nombres_filt) => {
         const store = getStore();
         const { baseURL } = store;
-        console.log(indi_nombres_filt, "los nombres filtrados")
+        let indicadores_dia_anterior_I = [];
+        setStore({ indicadores_dia_anterior: [] });
 
         for (let i = 0; i < indi_nombres_filt.length; i++) {
           const resp = await fetch(
             baseURL + `/${indi_nombres_filt[i]}/${formatted_date}`
           );
           const dato = await resp.json();
-          console.log(dato, "del dia anterior")
           if (dato.msg) {
             setStore({
               errorindi_nombres_filt: dato
             });
           } else {
-            store.indicadores_dia_anterior.push(dato);
+            indicadores_dia_anterior_I.push(dato);
           }
         }
+        setStore({ indicadores_dia_anterior: indicadores_dia_anterior_I });
       },
 
       // funcion para obtener los indicadores en un rango de fechas dadas
@@ -121,6 +120,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       indicadoresRangoRetorno: async (rango_dias, indi_nombres_filt) => {
+        let indicadoresrangoDeDiasI = [];
+        setStore({ indicadoresrangoDeDias: [] });
+
         for (let i = 0; i < indi_nombres_filt.length; i++) {
           let valores = [];
           for (let b = 0; b < rango_dias.length; b++) {
@@ -130,13 +132,13 @@ const getState = ({ getStore, getActions, setStore }) => {
               baseURL + `/${indi_nombres_filt[i]}/${rango_dias[b]}`
             );
             const dato = await resp.json();
-            console.log(dato, "el dato")
-            if (b === rango_dias.length-1) {
+            console.log(dato, "el dato");
+            if (b === rango_dias.length - 1) {
               let data = {};
               data["labels"] = rango_dias;
               data["series"] = [valores];
               data["nombre"] = dato.nombre;
-              store.indicadoresrangoDeDias.push(data);
+              indicadoresrangoDeDiasI.push(data);
             } else if (dato.msg) {
               setStore({
                 errorRangoDeDias: dato
@@ -144,10 +146,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             } else if (dato.serie.length === 0) {
               valores.push(0);
             } else {
-              valores.push(dato.serie[0].valor)
-            };
+              valores.push(dato.serie[0].valor);
+            }
           }
         }
+        setStore({ indicadoresrangoDeDias: indicadoresrangoDeDiasI });
       },
 
       // Funcion para filtrar

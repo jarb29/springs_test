@@ -36,6 +36,7 @@ export default function DashboardII() {
   const { store, actions } = useContext(Context);
   const [diaInicio, setDiaInicio] = React.useState([]);
   const [diaFinal, setDiaFinal] = React.useState([]);
+
   const classes = useStyles();
 
   let colors = ["warning", "success", "danger", "info", "rose"];
@@ -80,56 +81,59 @@ export default function DashboardII() {
       </GridContainer>
 
       <GridContainer>
-        {store.indicadoresrangoDeDias.map((indicadores, index) => {
-          const a = Math.floor(Math.random() * 5);
-          return (
-            <GridItem xs={12} sm={12} md={6} key={index}>
-              <Card chart className={classes.cardHover}>
-                <CardHeader
-                  color={colors[a]}
-                  className={classes.cardHeaderHover}
-                >
-                  <ChartistGraph
-                    className="ct-chart-white-colors"
-                    data={indicadores}
-                    type="Bar"
-                    options={simpleBarChart.options}
-                    responsiveOptions={simpleBarChart.responsiveOptions}
-                    listener={simpleBarChart.animation}
-                  />
-                </CardHeader>
-                <CardBody>
-                  <div className={classes.cardHoverUnder}>
-                    <Tooltip
-                      id="tooltip-top"
-                      title="Refresh"
-                      placement="bottom"
-                      classes={{ tooltip: classes.tooltip }}
+        {store.indicadoresrangoDeDias
+          ? store.indicadoresrangoDeDias.map((indicadores, index) => {
+              const a = Math.floor(Math.random() * 5);
+              return (
+                <GridItem xs={12} sm={12} md={6} key={index}>
+                  <Card chart className={classes.cardHover}>
+                    <CardHeader
+                      color={colors[a]}
+                      className={classes.cardHeaderHover}
                     >
-                      <Button simple color="info" justIcon>
-                        <Refresh className={classes.underChartIcons} />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip
-                      id="tooltip-top"
-                      title="Change Date"
-                      placement="bottom"
-                      classes={{ tooltip: classes.tooltip }}
-                    >
-                      <Button color="transparent" simple justIcon>
-                        <Edit className={classes.underChartIcons} />
-                      </Button>
-                    </Tooltip>
-                  </div>
-                  
-                </CardBody>
-                <CardFooter chart>
-                  <h4 className={classes.cardTitle}>{indicadores.nombre}</h4>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          );
-        })}
+                      <ChartistGraph
+                        className="ct-chart-white-colors"
+                        data={indicadores}
+                        type="Bar"
+                        options={simpleBarChart.options}
+                        responsiveOptions={simpleBarChart.responsiveOptions}
+                        listener={simpleBarChart.animation}
+                      />
+                    </CardHeader>
+                    <CardBody>
+                      <div className={classes.cardHoverUnder}>
+                        <Tooltip
+                          id="tooltip-top"
+                          title="Refresh"
+                          placement="bottom"
+                          classes={{ tooltip: classes.tooltip }}
+                        >
+                          <Button simple color="info" justIcon>
+                            <Refresh className={classes.underChartIcons} />
+                          </Button>
+                        </Tooltip>
+                        <Tooltip
+                          id="tooltip-top"
+                          title="Change Date"
+                          placement="bottom"
+                          classes={{ tooltip: classes.tooltip }}
+                        >
+                          <Button color="transparent" simple justIcon>
+                            <Edit className={classes.underChartIcons} />
+                          </Button>
+                        </Tooltip>
+                      </div>
+                    </CardBody>
+                    <CardFooter chart>
+                      <h4 className={classes.cardTitle}>
+                        {indicadores.nombre}
+                      </h4>
+                    </CardFooter>
+                  </Card>
+                </GridItem>
+              );
+            })
+          : null}
       </GridContainer>
     </div>
   );
