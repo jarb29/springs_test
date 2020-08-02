@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../../AppContext";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 // import { Manager, Target, Popper } from "react-popper";
+import { NavLink } from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import cx from "classnames";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -13,6 +16,7 @@ import Grow from "@material-ui/core/Grow";
 import Hidden from "@material-ui/core/Hidden";
 import Popper from "@material-ui/core/Popper";
 import Divider from "@material-ui/core/Divider";
+import Input from "@material-ui/core/Input";
 
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
@@ -29,6 +33,7 @@ import styles from "assets/jss/material-dashboard-pro-react/components/adminNavb
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
+  const { store, actions } = useContext(Context);
   const [openNotification, setOpenNotification] = React.useState(null);
   const handleClickNotification = event => {
     if (openNotification && openNotification.contains(event.target)) {
@@ -47,6 +52,10 @@ export default function HeaderLinks(props) {
     } else {
       setOpenProfile(event.currentTarget);
     }
+  };
+
+  const activeRoute = routeName => {
+    return window.location.href.indexOf(routeName) > -1 ? true : false;
   };
   const handleCloseProfile = () => {
     setOpenProfile(null);
@@ -73,17 +82,22 @@ export default function HeaderLinks(props) {
 
   return (
     <div className={wrapper}>
-      <CustomInput
+      <Input
         rtlActive={rtlActive}
         formControlProps={{
           className: classes.top + " " + classes.search
         }}
         inputProps={{
-          placeholder: rtlActive ? "بحث" : "Search",
+          placeholder: "Search",
           inputProps: {
-            "aria-label": rtlActive ? "بحث" : "Search",
+            "aria-label": "Search",
             className: classes.searchInput
           }
+        }}
+        type="busqueda"
+        name="busqueda"
+        onChange={event => {
+          actions.filtro(event);
         }}
       />
       <Button
@@ -95,6 +109,15 @@ export default function HeaderLinks(props) {
       >
         <Search className={classes.headerLinksSvg + " " + classes.searchIcon} />
       </Button>
+
+      <div className={managerClasses}>
+        <NavLink
+          to={"/admin/charts"}
+          className={cx(classes.navLink, {
+            [classes.navLinkActive]: activeRoute("/admin/charts")
+          })}
+        >
+
       <Button
         color="transparent"
         simple
@@ -114,10 +137,15 @@ export default function HeaderLinks(props) {
         />
         <Hidden mdUp implementation="css">
           <span className={classes.linkText}>
-            {rtlActive ? "لوحة القيادة" : "Dashboard"}
+            {"Dashboard"}
           </span>
         </Hidden>
       </Button>
+      </NavLink>
+      </div>
+
+
+
       <div className={managerClasses}>
         <Button
           color="transparent"
@@ -150,6 +178,9 @@ export default function HeaderLinks(props) {
             </span>
           </Hidden>
         </Button>
+
+
+
         <Popper
           open={Boolean(openNotification)}
           anchorEl={openNotification}
@@ -213,82 +244,9 @@ export default function HeaderLinks(props) {
             </Grow>
           )}
         </Popper>
-      </div>
 
-      <div className={managerClasses}>
-        <Button
-          color="transparent"
-          aria-label="Person"
-          justIcon
-          aria-owns={openProfile ? "profile-menu-list" : null}
-          aria-haspopup="true"
-          onClick={handleClickProfile}
-          className={rtlActive ? classes.buttonLinkRTL : classes.buttonLink}
-          muiClasses={{
-            label: rtlActive ? classes.labelRTL : ""
-          }}
-        >
-          <Person
-            className={
-              classes.headerLinksSvg +
-              " " +
-              (rtlActive
-                ? classes.links + " " + classes.linksRTL
-                : classes.links)
-            }
-          />
-          <Hidden mdUp implementation="css">
-            <span onClick={handleClickProfile} className={classes.linkText}>
-              {rtlActive ? "الملف الشخصي" : "Profile"}
-            </span>
-          </Hidden>
-        </Button>
-        <Popper
-          open={Boolean(openProfile)}
-          anchorEl={openProfile}
-          transition
-          disablePortal
-          placement="bottom"
-          className={classNames({
-            [classes.popperClose]: !openProfile,
-            [classes.popperResponsive]: true,
-            [classes.popperNav]: true
-          })}
-        >
-          {({ TransitionProps }) => (
-            <Grow
-              {...TransitionProps}
-              id="profile-menu-list"
-              style={{ transformOrigin: "0 0 0" }}
-            >
-              <Paper className={classes.dropdown}>
-                <ClickAwayListener onClickAway={handleCloseProfile}>
-                  <MenuList role="menu">
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الملف الشخصي" : "Profile"}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الإعدادات" : "Settings"}
-                    </MenuItem>
-                    <Divider light />
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الخروج" : "Log out"}
-                    </MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+
+        
       </div>
     </div>
   );

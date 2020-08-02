@@ -6,6 +6,7 @@ import ChartistGraph from "react-chartist";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // @material-ui/icons
 // import InfoOutline from "@material-ui/icons/InfoOutline";
@@ -41,7 +42,7 @@ export default function DashboardII() {
           ? store.indicadoresrangoDeDias.map((indicadores, index) => {
               const a = Math.floor(Math.random() * 5);
               return (
-                <GridItem xs={12} sm={12} md={6} key={index}>
+                <GridItem xs={12} sm={12} md={12} key={index}>
                   <Card chart className={classes.cardHover}>
                     <CardHeader
                       color={colors[a]}
@@ -89,7 +90,9 @@ export default function DashboardII() {
                 </GridItem>
               );
             })
-          : "Seleccione un Rango de fechas para mostrar todos los indicadores dentro de ese rango"}
+          : 
+          <CircularProgress />
+          }
       </GridContainer>
     </div>
   );

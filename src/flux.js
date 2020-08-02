@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       indicadoresI: [],
       indicadores_dia_anterior: [],
       indicadoresrangoDeDias: [],
+      indicadoresrangoDeDiasII: [],
       rangoDeDias: [],
 
       // Errores del retorno
@@ -121,7 +122,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       indicadoresRangoRetorno: async (rango_dias, indi_nombres_filt) => {
         let indicadoresrangoDeDiasI = [];
-        setStore({ indicadoresrangoDeDias: [] });
+        setStore({ indicadoresrangoDeDias: [], indicadoresrangoDeDiasI: [] });
 
         for (let i = 0; i < indi_nombres_filt.length; i++) {
           let valores = [];
@@ -150,23 +151,40 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           }
         }
-        setStore({ indicadoresrangoDeDias: indicadoresrangoDeDiasI });
+        setStore({ 
+          indicadoresrangoDeDias: indicadoresrangoDeDiasI,
+          indicadoresrangoDeDiasII: indicadoresrangoDeDiasI
+         });
       },
 
       // Funcion para filtrar
       filtro: e => {
         const store = getStore();
+        const valores_indicadores = Object.values(store.indicadores);
+        const valores_indicadores_I = Object.values(store.indicadoresI);
+        let new_valores = valores_indicadores.filter(
+          e => typeof e !== "string"
+        );
+        let new_valores_I = valores_indicadores_I.filter(
+          e => typeof e !== "string"
+        );
+
+        console.log(new_valores, "para ver que sale");
         if (e.target.value.length === 0) {
-          setStore({ hoteles: store.hotelesII });
+          setStore({ indicadores: new_valores_I,
+            indicadoresrangoDeDias: store.indicadoresrangoDeDiasII
+          });
         } else {
           setStore({
-            hoteles: store.hotelesII.filter(
-              hotel =>
-                hotel.companyName
-                  .toLowerCase()
-                  .slice(0, e.target.value.length) ===
+            indicadores: new_valores_I.filter(
+              indi =>
+                indi.nombre.toLowerCase().slice(0, e.target.value.length) ===
                 e.target.value.toLowerCase()
-            )
+            ),
+            indicadoresrangoDeDias: store.indicadoresrangoDeDiasII.filter(indi=>
+              indi.nombre.toLowerCase().slice(0, e.target.value.length) ===
+              e.target.value.toLowerCase()
+              )
           });
         }
       }
