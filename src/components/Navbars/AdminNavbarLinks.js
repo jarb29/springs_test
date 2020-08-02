@@ -117,34 +117,31 @@ export default function HeaderLinks(props) {
             [classes.navLinkActive]: activeRoute("/admin/charts")
           })}
         >
-
-      <Button
-        color="transparent"
-        simple
-        aria-label="Dashboard"
-        justIcon
-        className={rtlActive ? classes.buttonLinkRTL : classes.buttonLink}
-        muiClasses={{
-          label: rtlActive ? classes.labelRTL : ""
-        }}
-      >
-        <Dashboard
-          className={
-            classes.headerLinksSvg +
-            " " +
-            (rtlActive ? classes.links + " " + classes.linksRTL : classes.links)
-          }
-        />
-        <Hidden mdUp implementation="css">
-          <span className={classes.linkText}>
-            {"Dashboard"}
-          </span>
-        </Hidden>
-      </Button>
-      </NavLink>
+          <Button
+            color="transparent"
+            simple
+            aria-label="Dashboard"
+            justIcon
+            className={rtlActive ? classes.buttonLinkRTL : classes.buttonLink}
+            muiClasses={{
+              label: rtlActive ? classes.labelRTL : ""
+            }}
+          >
+            <Dashboard
+              className={
+                classes.headerLinksSvg +
+                " " +
+                (rtlActive
+                  ? classes.links + " " + classes.linksRTL
+                  : classes.links)
+              }
+            />
+            <Hidden mdUp implementation="css">
+              <span className={classes.linkText}>{"Dashboard"}</span>
+            </Hidden>
+          </Button>
+        </NavLink>
       </div>
-
-
 
       <div className={managerClasses}>
         <Button
@@ -179,8 +176,6 @@ export default function HeaderLinks(props) {
           </Hidden>
         </Button>
 
-
-
         <Popper
           open={Boolean(openNotification)}
           anchorEl={openNotification}
@@ -202,51 +197,37 @@ export default function HeaderLinks(props) {
               <Paper className={classes.dropdown}>
                 <ClickAwayListener onClickAway={handleCloseNotification}>
                   <MenuList role="menu">
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={dropdownItem}
-                    >
-                      {rtlActive
-                        ? "إجلاء أوزار الأسيوي حين بل, كما"
-                        : "Mike John responded to your email"}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={dropdownItem}
-                    >
-                      {rtlActive
-                        ? "شعار إعلان الأرضية قد ذلك"
-                        : "You have 5 new tasks"}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={dropdownItem}
-                    >
-                      {rtlActive
-                        ? "ثمّة الخاصّة و على. مع جيما"
-                        : "You're now friend with Andrew"}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "قد علاقة" : "Another Notification"}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "قد فاتّبع" : "Another One"}
-                    </MenuItem>
+                  <MenuItem
+                          onClick={handleCloseNotification}
+                          className={dropdownItem}
+                        >
+                        Esta opcion presente el valor del dia anterior
+                        </MenuItem>
+                    {store.indicadores_dia_anterior.map((indi, index) => {
+                      const nombre = indi.serie.length > 0 ? indi.nombre : null;
+                      const valor = indi.serie.length > 0
+                        ? indi.serie.map(e => {return e.valor})
+                        : null;
+                      return (
+                        nombre? 
+                        <MenuItem
+                          onClick={handleCloseNotification}
+                          className={dropdownItem}
+                          key={index}
+                        >
+                          Nombre: {nombre}
+                          <br/>
+                          Valor: {valor[0]}
+                        </MenuItem>
+                      : null);
+
+                    })}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
             </Grow>
           )}
         </Popper>
-
-
-        
       </div>
     </div>
   );
